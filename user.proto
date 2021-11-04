@@ -1,0 +1,88 @@
+syntax = "proto3";
+
+package app;
+
+service SpellingGame {
+
+  rpc CreateGame ( GameRequest ) returns ( GameResponse ) {}
+  rpc RegisterPlayer ( RegisterRequest ) returns ( RegisterResponse ) {}
+  rpc FinalizeGame ( FinalizeRequest ) returns ( FinalizeResponse ) {}
+  rpc PlayerVisit ( VisitRequest ) returns ( VisitResponse ) {}
+
+}
+
+
+message GameRequest {
+  string userName = 1;
+  string gameType = 2;
+}
+
+message GameResponse {
+  bytes gameId = 1;
+}
+
+message RegisterRequest {
+  bytes matchId = 1;
+  string userName = 2;
+}
+
+message RegisterResponse {
+  int32 userId = 1;
+}
+
+message  FinalizeRequest {
+  bytes gameId = 1;
+}
+
+message FinalizeResponse{
+
+}
+
+message VisitRequest {
+  bytes gameId = 1;
+  int32 userId = 2;
+  repeated Game visit = 3;
+
+}
+
+message VisitResponse{
+  int32 result = 1;
+  string message = 2;
+}
+
+
+message Word {
+  enum WordMultiplier {
+    NO_MATCH = 0;
+    VALID_WORD = 1;
+    PANGRAM = 2;
+  }
+  WordMultiplier multiplier = 1;
+  int32 segment = 2;
+
+}
+
+message ListRequest {
+  bytes gameId = 1;
+  int32 userId = 2;
+  repeated Game visit = 3;
+}
+
+message Player {
+  string uerName = 1;
+  int32 userId = 2;
+}
+
+message Game {
+  repeated Player players = 1;
+}
+
+message ListResponse {
+  repeated Game games = 1;
+}
+
+
+
+
+
+
